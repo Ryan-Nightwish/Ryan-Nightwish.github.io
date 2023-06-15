@@ -1,0 +1,723 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>软件测试复习笔记 | Skylark Space</title><meta name="author" content="Ryan Wong"><meta name="copyright" content="Ryan Wong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软件测试复习笔记 一、引论 为什么进行软件测试  产品质量的保证 控制成本的关键 软件可靠性确认 让企业具备国际竞争的实力  什么是软件测试 1、正向思维——验证软件正常工作：  软件测试就是为程序能够按预期设想那样运行而建立足够的信心 “软件测试是一系列活动以评价一个程序或系统的特性或能力并确定是否达到预期的结果” 测试是为了验证软件是否符合用户需求，即验证软件产品是否能正常工作  2、反向思维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件测试复习笔记">
+<meta property="og:url" content="http://ryan-nightwish.github.io/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Skylark Space">
+<meta property="og:description" content="软件测试复习笔记 一、引论 为什么进行软件测试  产品质量的保证 控制成本的关键 软件可靠性确认 让企业具备国际竞争的实力  什么是软件测试 1、正向思维——验证软件正常工作：  软件测试就是为程序能够按预期设想那样运行而建立足够的信心 “软件测试是一系列活动以评价一个程序或系统的特性或能力并确定是否达到预期的结果” 测试是为了验证软件是否符合用户需求，即验证软件产品是否能正常工作  2、反向思维">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-06-15T01:47:23.000Z">
+<meta property="article:modified_time" content="2023-06-15T02:23:57.076Z">
+<meta property="article:author" content="Ryan Wong">
+<meta property="article:tag" content="课程笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://ryan-nightwish.github.io/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '软件测试复习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-15 10:23:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/styles.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/static-butterfly/dist/css/index.min.css"><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Skylark Space"><span class="site-name">Skylark Space</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">软件测试复习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-15T02:23:57.076Z" title="更新于 2023-06-15 10:23:57">2023-06-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="软件测试复习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="软件测试复习笔记">软件测试复习笔记</h1>
+<h2 id="一引论">一、引论</h2>
+<h3 id="为什么进行软件测试">为什么进行软件测试</h3>
+<ul>
+<li>产品质量的保证</li>
+<li>控制成本的关键</li>
+<li>软件可靠性确认</li>
+<li>让企业具备国际竞争的实力</li>
+</ul>
+<h3 id="什么是软件测试">什么是软件测试</h3>
+<p>1、正向思维——验证软件正常工作：</p>
+<ul>
+<li>软件测试就是为程序能够按预期设想那样运行而建立足够的信心</li>
+<li>“软件测试是一系列活动以评价一个程序或系统的特性或能力并确定是否达到预期的结果”</li>
+<li>测试是为了验证软件是否符合用户需求，即验证软件产品是否能正常工作</li>
+</ul>
+<p>2、反向思维——假定软件有错误：</p>
+<ul>
+<li>测试是为了证明程序有错，而不是证明程序无错误</li>
+<li>一个好的测试用例是在于它能发现至今未发现的错误</li>
+<li>一个成功的测试是发现了至今未发现的错误的测试</li>
+</ul>
+<blockquote>
+<p>Chat老师：</p>
+<p>在软件测试中，正向思维和逆向思维是两种测试方法，它们的主要区别在于测试的目的和方法。正向思维是指测试人员按照预期的功能和需求来测试软件，而逆向思维则是从不符合预期的情况出发，测试来发现软件中的缺陷和漏洞。</p>
+<p>虽然正向思维和逆向思维在过去被广泛使用，但现在它已经不再流行的原因是因为它们存在一些缺陷和局限性。正向思维只能测试软件的预期功能而无法发现软件中的潜在问题和漏洞。逆向思维虽然可以发现软件中的缺陷和漏洞，但它往往需要更多的时间和资源，并且测试结果可能不够全面和准确。</p>
+<p>现在，软件测试更加注重全面性和深度性，测试人员更倾于使用更加综合和全面的测试方法，例如基于风险的测试、探索性测试和自动化测试等。这些测试方法可以更好地发现软件中的问题和漏洞，并且可以更加高效地进行测试。</p>
+</blockquote>
+<p>3、软件测试定义</p>
+<ul>
+<li>软件测试是由“验证（Verification）”和“有效性确认（Validation）”活动构成的整体</li>
+<li>“验证”是检验软件是否已正确地实现了<em>产品规格书</em>所定义的系统功能和特性</li>
+<li>“有效性确认”是确认所开发的软件是否满足<em>用户</em>真正需求的活动</li>
+</ul>
+<p>4、软件测试的导向</p>
+<ul>
+<li>以功能验证为导向，测试是证明软件是正确的（正向思维）</li>
+<li>以破坏性检测为导向，测试是为了找到软件中的错误（逆向思维）</li>
+<li>以质量评估为导向，测试是提供产品的评估和质量度量</li>
+<li>以缺陷预防为导向，测试是为了展示软件符合设计要求，发现缺陷、预防缺陷</li>
+</ul>
+<p>5、软件测试的学派</p>
+<ul>
+<li>分析学派：分析学派认为软件测试是<em>逻辑性</em>的，将测试看作<em>计算机科学和数学</em>的一部分</li>
+<li>标准学派：标准学派认为软件测试是用于<em>衡量进度</em>的一种方式，是对产品<em>需求的确认</em>，每个需求需得到验证</li>
+<li>质量学派：质量学派强调<em>过程</em>，测试就是<em>过程的质量控制</em>，揭示项目的质量风险之活动</li>
+<li>上下文驱动学派：上下文驱动学派强调人的能动性和启发性测试思维，使用<em>探索式测试</em></li>
+<li>敏捷学派：敏捷学派使用软件测试来验证开发是否完成，<em>强调自动化</em></li>
+</ul>
+<h3 id="软件测试与软件开发的关系">软件测试与软件开发的关系</h3>
+<p>1、V模型和W模型</p>
+<p>软件开发中的V模型是一种延伸自瀑布模型的软件开发过程，是通用V模型的一个例子。V模型的软件开发不是以直线的方式进行，<em>其过程在源代码阶段之前逐步往下，而在源代码阶段之后逐步往上，形成了V字形</em>。V模型<em>指出了软件开发中的各阶段以及其对应软件测试阶段之间的关系</em>。横轴表示时间或是专案的完成度，而纵轴表示抽象的程度（范围越大，越抽象的在越上方）。</p>
+<figure>
+<img src="440px-Systems_Engineering_Process_II.svg.png" alt="V模型">
+<figcaption aria-hidden="true">V模型</figcaption>
+</figure>
+<p>W模型，由Evolutif公司提出，
+相对于V模型，W模型增加了软件开发各阶段中同步进行的验证和确认活动。如图所示，由两个V字型模型组成，分别代表测试与开发过程，图中明确表示出了测试与开发的并行关系。</p>
+<figure>
+<img src="a.png" alt="W模型">
+<figcaption aria-hidden="true">W模型</figcaption>
+</figure>
+<p>2、软件测试与质量保证的关系</p>
+<ul>
+<li>软件质量保证（Software Quality
+Assurance，SQA）活动是通过对软件产品<em>有计划的进行评审和审计</em>来验证软件<em>是否合乎标准</em>的系统工程，通过协调、审查和跟踪以获取有用信息，<em>形成分析结果以指导软件过程</em>。</li>
+<li>SQA指导、监督软件测试的计划和执行，督促测试工作的结果客观、准确和有效，并协助测试流程的改进。</li>
+</ul>
+<blockquote>
+<ul>
+<li><p>软件测试是SQA重要手段之一，为SQA提供所需的数据，作为质量评价的客观依据。</p></li>
+<li><p>SQA是一项<em>管理</em>工作，侧重于对<em>流程</em>的评审和监控</p></li>
+<li><p>测试是一项<em>技术性</em>的工作，侧重对<em>产品</em>进行评估和验证</p></li>
+</ul>
+</blockquote>
+<h2 id="二软件测试的基本概念">二、软件测试的基本概念</h2>
+<h3 id="软件缺陷定义">软件缺陷定义</h3>
+<p>标准定义：</p>
+<ul>
+<li>从<em>产品内部</em>看，软件缺陷是软件产品<em>开发或维护过程</em>中所存在的错误、毛病等各种问题</li>
+<li>从<em>外部</em>看，软件缺陷是系统所需要实现的某种<em>功能的失效或违背</em></li>
+</ul>
+<h3 id="缺陷产生的原因">缺陷产生的原因</h3>
+<ul>
+<li>技术问题：算法错误、语法错误、计算和精度问题、接口参数传递不匹配（<strong>结果规格说明书是软件缺陷出现最多的地方</strong>）</li>
+<li>软件本身：文档错误、强度或负载问题、不完善的软件开发标准</li>
+<li>团队工作：沟通不充分、团队文化问题</li>
+</ul>
+<h3 id="修复软件缺陷的代价">修复软件缺陷的代价</h3>
+<p><img src="b.png" alt="修复缺陷代价" style="zoom: 50%;"></p>
+<p>平均而言，如果在需求阶段修正一个错误的代价是1，那么，在设计阶段就是它的3～6倍，在编程阶段是它的10倍，在内部测试阶段是它的20～40倍，
+在外部测试阶段是它的30～70倍，而到了产品发布出去时，这个数字就是40～1000倍，修正错误的代价不是随时间线性增长，而几乎是呈指数增长的。</p>
+<h3 id="测试结束的标准">测试结束的标准</h3>
+<ul>
+<li>用例全部测试</li>
+<li>覆盖率达到标准</li>
+<li>缺陷率达到标准</li>
+<li>其他指标达到标准</li>
+</ul>
+<h3 id="软件测试的分类">软件测试的分类</h3>
+<figure>
+<img src="image-20230610101753376.png" alt="软件测试的分类">
+<figcaption aria-hidden="true">软件测试的分类</figcaption>
+</figure>
+<p>静态测试和动态测试：</p>
+<ul>
+<li>静态测试包括<strong>对软件产品的需求和设计规格说明书的评审、对程序代码的复审以及静态分析</strong>等。静态分析的查错和分析功能是其他方法所不能替代的，可以采用人工检测和计算机辅助静态分析手段进行检测，但越来越多地采用工具进行自动化分析。
+<ul>
+<li>互查</li>
+<li>走查：采用讲解、讨论和模拟运行的方式进行的查找错误的活动</li>
+<li>评审：以会议形式，制定目标、流程和规则，按缺陷检查表（不断完善）逐项检查</li>
+</ul></li>
+<li>动态测试是<strong>通过真正运行程序发现错误，通过观察代码运行过程</strong>，来获取系统行为、变量实时结果、内存、堆栈、线程以及测试覆盖度等各方面的信息，来判断系统是否存在问题，或者通过有效的测试用例，对应的输入输出关系来分析被测程序的运行情况，来发现缺陷。
+<ul>
+<li>驱动模块：对底层或子层模块进行测试所编写的调用这些模块的程序</li>
+<li>桩模块：对顶层或上层模块进行测试时所编写的替代下层模块的程序</li>
+</ul></li>
+</ul>
+<h3 id="软件测试的工作范畴">软件测试的工作范畴</h3>
+<ul>
+<li>软件测试工作的组织与管理：制定测试策略、测试计划，确认所采用的测试方法与规范，控制测试进度，管理测试资源。</li>
+<li>测试工作的实施：编制符合标准的测试文档，搭建测试环境，开发测试脚本、与开发组织协作实现各阶段的测试活动。</li>
+</ul>
+<h2 id="三软件测试的方法">三、软件测试的方法</h2>
+<h3 id="白盒测试的概念">白盒测试的概念</h3>
+<p>白盒测试也称结构测试或逻辑驱动测试，它是<strong>按照程序内部的结构测试程序</strong>，通过测试来检测产品内部动作是否按照设计规格说明书的规定正常进行，检验程序中的每条通路是否都能按预定要求正确工作。</p>
+<h3 id="黑盒测试的概念">黑盒测试的概念</h3>
+<p>黑盒测试也称功能测试，它是通过测试来<strong>检测每个功能是否都能正常使用</strong>。在测试中，把程序看作一个不能打开的黑盒子，在完全不考虑程序内部结构和内部特性的情况下，在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数据而产生正确的输出信息。黑盒测试着眼于程序外部结构，不考虑内部逻辑结构，主要针对软件界面和软件功能进行测试。</p>
+<h3 id="什么是测试用例">什么是测试用例</h3>
+<p>为某个特殊目标而编制的<strong>一组测试输入、执行条件以及预期结果</strong>，以便测试某个程序路径或核实是否满足某个特定需求。指对一项特定的软件产品进行测试任务的描述，体现测试方案、方法、技术和策略。内容包括测试目标、测试环境、输入数据、测试步骤、预期结果、测试脚本等，并形成文档。</p>
+<h3 id="为什么要设计测试用例">为什么要设计测试用例</h3>
+<ul>
+<li>测试用例构成了设计和制定测试过程的基础。</li>
+<li>测试的“深度”与测试用例的数量成比例。由于每个测试用例反映不同的场景、条件或经由产品的事件流，因而，随着测试用例数量的增加，对产品质量和测试流程也就越有信心。判断测试是否完全的一个主要评测方法是基于需求的覆盖，而这又是以确定、实施和/或执行的测试用例的数量为依据的。</li>
+<li>测试工作量与测试用例的数量成比例。根据全面且细化的测试用例，可以更准确地估计测试周期各连续阶段的时间安排。</li>
+<li>测试设计和开发的类型以及所需的资源主要都受控于测试用例。</li>
+<li>测试用例通常根据它们所关联关系的测试类型或测试需求来分类，而且将随类型和需求进行相应地改变。最佳方案是为每个测试需求至少编制两个测试用例：即正面用例（证明该需求已满足）和负面用例（只有在所需条件下才能满足该需求）。</li>
+<li>测试用例是软件测试的核心。</li>
+</ul>
+<h3 id="白盒测试方法的分类">白盒测试方法的分类</h3>
+<ul>
+<li><p>语句覆盖：语句覆盖法的基本思想是设计若干测试用例，运行被测程序，使程序中的<strong>每个可执行语句至少被执行一次</strong></p></li>
+<li><p>判定覆盖：判定覆盖法的基本思想是设计若干用例，运行被测程序，使得程序中<strong>每个判断的取真分支和取假分支至少经历一次</strong>，即判断真假值均曾被满足</p></li>
+<li><p>条件覆盖：条件覆盖的基本思想是设计若干测试用例，执行被测程序以后，要使<strong>每个判断中每个条件的可能取值至少满足一次</strong>。</p></li>
+<li><p>判定-条件覆盖：<strong>判定覆盖和条件覆盖的交集</strong>，即所有条件可能取值至少执行一次，同时所有判断的可能结果至少执行一次。</p></li>
+<li><p>条件组合覆盖：<strong>每个判定中条件结果的所有可能组合至少出现一次</strong>。</p></li>
+<li><p>基本路径覆盖：设计所有的测试用例，来<strong>覆盖程序中的所有可能的执行路径</strong>。如果一种方法都不能完全覆盖所有测试用例，力求最高的覆盖率。</p></li>
+</ul>
+<blockquote>
+<p>基本路径覆盖方法：</p>
+<ul>
+<li><p>根据代码绘制流程图</p></li>
+<li><p>确定流程图的圈复杂度</p></li>
+<li><p>确定线性独立路径的基本集合</p></li>
+<li><p>设计测试用例覆盖每条基本路径</p></li>
+</ul>
+<p>圈复杂度 V(G) = 区域数量 = 连线数量 - 节点数量 + 2 = 判定节点数量 +
+1</p>
+<p>独立路径：和其他独立路径相比，<strong>至少引入一个新处理语句或一个新判断的程序通路</strong>（独立路径必须包含一条在定义之前不曾用到的边）。V(G)
+值正好等于该程序的独立路径的条数。</p>
+<p>Chat老师：为什么需要求环路复杂度？</p>
+<p>它可以帮助测试人员确定需要执行的测试用例数量，确保程序的所有路径都被覆盖到；另外，环路复杂度还可以帮助测试人员确定程序中的复杂度。程序的复杂度越高，就越难以测试维护。</p>
+</blockquote>
+<h3 id="黑盒测试方法的分类">黑盒测试方法的分类</h3>
+<ul>
+<li><p>等价类划分法（等价分类法）：分为有效等价类和无效等价类。有效等价类是有意义的、合理的输入数据，可检查程序是否实现了规格说明中所规定的功能和性能。无效等价类与有效等价类的意义相反。</p></li>
+<li><p>边界值分析法：确定边界情况（输入或输出等价类的边界）、选取正好等于、刚刚大于或刚刚小于边界值作为测试数据</p></li>
+<li><p>因果图法</p></li>
+<li><p>判定表法</p></li>
+</ul>
+<blockquote>
+<p>用条件覆盖法设计白盒测试用例</p>
+<p>用等价类和边界值设计黒盒测试用例</p>
+<p>以上设计测试用例的方法一定要掌握</p>
+</blockquote>
+<h3 id="有限自动机">有限自动机</h3>
+<p>有限状态机FSM是对象行为建模的工具，以<em>描述对象在其生命周期所经历的状态序列</em>，以及<em>如何响应来自外界的各种事件</em>。</p>
+<p>拓展有限状态机EFSM是在FSM基础上<em>增加了动作和转移条件</em>，以处理系统的数据流问题。EFSM增加一个初始状态，并把状态转移函数、输出函数变为变量集合、转移集合。</p>
+<figure>
+<img src="image-20230611151843517.png" alt="EFSM">
+<figcaption aria-hidden="true">EFSM</figcaption>
+</figure>
+<p>以电梯为例的EFSM：</p>
+<figure>
+<img src="image-20230611152100687.png" alt="电梯EFSM">
+<figcaption aria-hidden="true">电梯EFSM</figcaption>
+</figure>
+<p>一个堆栈的状态图：</p>
+<figure>
+<img src="image-20230611152535156.png" alt="一个堆栈的状态图">
+<figcaption aria-hidden="true">一个堆栈的状态图</figcaption>
+</figure>
+<p>状态表：</p>
+<figure>
+<img src="image-20230611162716355.png" alt="状态表">
+<figcaption aria-hidden="true">状态表</figcaption>
+</figure>
+<p>状态生成树：</p>
+<figure>
+<img src="image-20230611152617508.png" alt="状态转化树生成测试用例">
+<figcaption aria-hidden="true">状态转化树生成测试用例</figcaption>
+</figure>
+<h2 id="四软件测试流程与规范">四、软件测试流程与规范</h2>
+<h3 id="基于脚本测试和探索式测试">基于脚本测试和探索式测试</h3>
+<p>基于脚本的测试（ST）是先设计后执行，分为：分析、设计、执行、报告，阶段性明显，属于较传统的测试方式。</p>
+<p>探索式测试（ET）强调测试学习，设计和执行同时展开。没有测试用例，一边想（设计）一边测试。</p>
+<p>使用ET的原因：</p>
+<ul>
+<li>开发人员多、测试人员少，测试更关注效率</li>
+<li>整个开发节奏很快，测试要跟上这个节奏</li>
+<li>测试时间很少，需要快速完成测试</li>
+<li>对产品或业务不够熟悉，需要操作或使用它来熟悉</li>
+<li>产品某些部分复杂，需要不断探索，才能很好地完成测试</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 63%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>ST</th>
+<th>ET</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>系统性强，容易管理</td>
+<td>高效率，适应性强</td>
+</tr>
+<tr class="even">
+<td>设计在先、执行在后</td>
+<td>执行和思考并行</td>
+</tr>
+<tr class="odd">
+<td>验证自己的思路，有可预见性</td>
+<td>不断问系统，是学习的过程</td>
+</tr>
+<tr class="even">
+<td>关注需求和测试文档，有明确的测试标准，强调评审、可控</td>
+<td>强调个人能力，关注与产品的交互</td>
+</tr>
+<tr class="odd">
+<td>严谨、规范</td>
+<td>拥抱变化、乐趣</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tmmitesting-maturity-model-integration">TMMi（Testing Maturity
+Model integration）</h3>
+<p>是一种软件测试成熟度模型，它提供了一种评估和改进组织测试过程的方法。过程能力描述了遵循一个软件测试过程可能达到的预期结果的范围。TMMi的建立，得益于以下3点：</p>
+<ul>
+<li>充分吸收CMM的精华</li>
+<li>基于历史演化的测试过程</li>
+<li>业界的最佳实践</li>
+</ul>
+<p>TMM的五个级别：</p>
+<p><img src="image-20230610153841299.png" alt="TMM的五个级别" style="zoom:50%;"></p>
+<h3 id="tpitest-process-improvement">TPI（Test Process
+Improvement）</h3>
+<p>测试过程改进是基于连续性表示法的测试过程改进的参考模型，是在软件控制、测试知识以及过往经验的基础上开发出来的。</p>
+<h3 id="ctpcritical-test-process">CTP（Critical Test Process）</h3>
+<p>关键测试过程是一个内容参考模型、上下文相关的方法，并能对模型进行裁剪。使用CTP的过程改进，始于对现有测试过程的评估，通过评估以识别过程的强弱，并结合组织的需要提供改进的意见。具体分为：计划、准备、执行和完善。</p>
+<h3 id="stepsystematic-test-and-evaluation-process">STEP（Systematic
+Test and Evaluation Process）</h3>
+<p>系统化测试和评估过程是一个内容参考模型，认定测试是一个生命周期活动，在明确需求后开始直到系统退役。</p>
+<h3 id="tmaptest-management-approach">TMap（Test Management
+Approach）</h3>
+<p>测试管理方法是一种<strong>结构化</strong>的、<strong>基于风险策略</strong>的测试方法体系，目的能更早地发现缺陷，以最小的成本、有效地、彻底地完成测试任务，以减少软件发布后的支持成本。</p>
+<p>TMap所定义的测试生命周期由<em>计划和控制</em>、<em>准备</em>、<em>说明</em>、<em>执行</em>和<em>完成</em>等阶段组成。</p>
+<h2 id="五单元测试与集成测试">五、单元测试与集成测试</h2>
+<h3 id="单元测试的概念">单元测试的概念</h3>
+<p>定义：单元测试是对软件基本的组成单元（如函数、类的方法）进行的测试。</p>
+<p>时机：单元测试和编码同步进行，但在TDD中，强调测试在先，编码在后。一般由开发人员完成，QA人员辅助。</p>
+<p>原因：尽早发现错误；检查代码是否符合设计和规范，有利于将来代码的维护。</p>
+<p>目标：单元模块被正确编码，验证代码与软件系统设计的一致性</p>
+<ul>
+<li>对单元的代码规范性，正确性，安全性等进行验证</li>
+<li>信息能否正确地流入和流出单元</li>
+<li>在单元工作过程中，其内部数据能否保持其完整性，包括内部数据的形式、内容及相互关系不发生错误，全局变量在单元中的处理和影响</li>
+<li>为限制数据加工而设置的边界处，能否正确工作</li>
+<li>单元的运行能否做到满足特定的逻辑覆盖</li>
+<li>单元中发生错误，其中的出错处理措施是否有效</li>
+<li>指针是否被错误引用，资源是否及时被释放</li>
+<li>有无安全隐患？是否使用了不恰当的字符串处理函数</li>
+</ul>
+<p>依据：《软件需求规格说明书》《软件详细设计说明书》</p>
+<p>测试任务：</p>
+<ul>
+<li>独立路径的测试：检查每一条独立执行路径的测试，并保证每条语句被至少执行一次。</li>
+<li>局部数据结构：检查局部数据结构完整性</li>
+<li>单元接口：检查模块接口是否正确</li>
+<li>边界条件：检查临界数据处理的正确性</li>
+<li>容错性测试：预设的各种出错处理是否正确有效</li>
+<li>内存分析</li>
+</ul>
+<blockquote>
+<p>测试是为了发现软件中存在的错误而执行程序的过程，而调试是定位错误并修改程序以修正错误的过程。</p>
+</blockquote>
+<h3 id="集成测试的概念">集成测试的概念</h3>
+<p>定义：集成测试是将软件集成起来，对模块之间的接口进行测试。</p>
+<ul>
+<li>模块内的集成，主要是测试模块内各个接口间的交互集成关系；</li>
+<li>子系统内的集成，测试子系统内各个模块间的交互关系；</li>
+<li>系统内的集成，测试系统内各个子系统和模块间的集成关系。</li>
+</ul>
+<p>集成测试的模型：非渐增式测试模式与渐增式测试模式</p>
+<ul>
+<li>非渐增式测试模式：先分别测试每个模块，再把所有模块按设计要求放在一起结合成所要的程序，如大棒模式。</li>
+<li>渐增式测试模式：把下一个要测试的模块同已经测试好的模块结合进来进行测试，测试完后再把下一个应该测试的模块结合起来测试。渐增式测试又可以根据每次添加模块的路线分为自顶向下测试、自底向上测试和混合测试等方式。</li>
+</ul>
+<blockquote>
+<p>三明治集成，中上层自顶向下，中下层自底向上。</p>
+<p>采用三明治方法的优点是：它将自顶向下和自底向上的集成方法有机地结合起来，可以少写桩程序或驱动程序。</p>
+<p>采用这种方法的主要缺点是：在真正集成之前每一个独立的模块没有完全测试过。</p>
+</blockquote>
+<p>依据：《<strong>软件概要设计说明书</strong>》（主要）、《软件详细设计说明书》</p>
+<h2 id="六系统测试">六、系统测试</h2>
+<h3 id="系统测试的概念">系统测试的概念</h3>
+<p>系统测试（特征测试）：检验系统所有元素之间协作是否合适，整个系统的<strong>性能和功能</strong>是否达到要求。其测试内容包括：功能测试，非功能测试与回归测试等。</p>
+<p>测试人员：软件测试工程师</p>
+<p>测试依据：需求说明书，概要设计说明书，详细设计说明书，最重要的是<strong>需求说明书</strong>。</p>
+<h3 id="功能回归性能测试">功能、回归、性能测试</h3>
+<p>功能测试：根据产品规格说明书，验证被测试的系统是否满足各方面的使用要求。测试的要点是：功能逻辑清楚，符合使用者习惯、系统的各种状态按照业务流程而变化，并保持稳定、每项功能符合实际要求。</p>
+<p>回归测试：为保证软件中新的变化(新增加的代码、代码修改等)不会对原有功能的正常使用有影响而进行的测试。也就是说，满足用户需求的原有功能不应该因为代码变化而出现任何新的问题。</p>
+<p>性能测试：就是为了<em>发现系统性能问题</em>或<em>获取系统性能相关指标</em>而进行的测试。一般在<strong>真实环境</strong>、<strong>特定负载</strong>条件下，通过<strong>工具模拟</strong>实际软件系统的运行及其操作，同时监控性能各项指标，最后对测试结果进行分析来确定系统的性能状况。主要的性能指标有：服务器的各项指标（CPU、内存占用率等）、后台数据库的各项指标、网络流量、响应时间。</p>
+<p>性能测试的基本过程：</p>
+<ul>
+<li>确定性能测试需求</li>
+<li>选择测试工具和开发相应的测试脚本</li>
+<li>建立<strong>性能测试负载模型</strong>：
+<ul>
+<li>确定并发虚拟用户数量，每次请求的数据量，思考时间，加载方式和持续加载的时间等</li>
+<li>是个迭代完善的过程</li>
+</ul></li>
+<li>执行测试</li>
+<li>提交测试报告，进行分析</li>
+</ul>
+<p>压力测试：也称负载测试(ioad
+testing)，用来检查系统在不同负载(如数据量、并发用户、连接数等)条件下的系统运行情况，特别是高负载、极限负载下的系统运行情况，以发现系统不稳定、系统性能瓶颈、内存泄漏、CPU
+使用率过高等问题。</p>
+<p>确认测试：确认测试又称有效性测试。有效性测试是在<em>模拟的环境</em>下，运用<em>黑盒测试</em>的方法，验证被测软件是否<em>满足需求规格说明书列出的需求</em>。任务是验证软件的功能和性能及其他特性是否与用户的要求一致。对软件的功能和性能要求在软件需求规格说明书中已经明确规定，它包含的信息就是软件确认测试的基础。</p>
+<h3 id="其他非功能性测试">其他非功能性测试</h3>
+<p>软件安全性测试：全面检验软件在需求规格说明中规定的<strong>防止危险状况措施的有效性</strong>和<strong>在每一个危险状态下的反应</strong>，对软件设计中用于提高安全性的结果，算法，容错，冗余，中断处理等方案进行针对性测试，并对安全性关键的软件单元和软件部件，单独进行加强的测试，以确认其满足安全性需求。</p>
+<p>容错性测试：检查软件在异常条件下自身是否具有防护性的措施或者某种灾难性恢复的手段。</p>
+<p>兼容性测试: 验证软件之间是否正确地交互和共享信息。</p>
+<h2 id="七验收测试">七、验收测试</h2>
+<h3 id="验收测试的概念">验收测试的概念</h3>
+<p>验收测试：在软件产品完成了<em>系统功能和非功能测试之后</em>、<em>产品发布之前</em>所进行的软件测试活动，它是技术测试的最后一个阶段，也称为交付测试。<em>检查软件是否符合合同要求</em>，包括需求规格说明、设计规格说明和用户手册等。</p>
+<p>测试人员：用户和测试部门</p>
+<p>测试依据：国家规范、行业标准、合同条款、用户确认的需求规格说明书（<strong>需求规格说明书在初稿完成至编程之前评审，在验收期间进行验证？？？</strong>）</p>
+<p>测试内容：和用户一起来验收软件系统，在真实环境下运行软件系统，看是否存在和用户要求不一致的问题，或违背产品规格的要求；发现测试人员不能预见的问题。</p>
+<p>验收结果：验收报告，也称为发布报告。</p>
+<h3 id="αβ测试">α/β测试</h3>
+<p>α测试是指<strong>软件开发公司组织内部人员</strong>模拟各类用户行对即将面市软件产品（称为α版本）进行测试，试图发现错误并修正。经过α测试调整的软件产品称为β版本。</p>
+<p>β测试是指<strong>软件开发公司组织各方面的典型用户</strong>在日常工作中实际使用β版本，并要求用户报告异常情况、提出批评意见。然后软件开发公司再对β版本进行改错和完善。</p>
+<h3 id="测试内容">测试内容</h3>
+<p>文档测试：主要检查文档的正确性、完备性、易理解性、一致性。好的文档能达到提高易用性、提高可靠性、降低技术支持费用的目的，从而提高了产品的整体质量。</p>
+<p>可用性测试：保证用户界面符合标准和规范、直观性、一致性、灵活性、舒适性、正确性、实用性。没有量化标准，主观性强。</p>
+<p>可安装性测试：（安装过程是否顺利）</p>
+<p>可恢复性测试：当系统出错时，能否在指定时间内修正错误或重新启动系统。</p>
+<p>兼容性测试：软件兼容性测试、数据共享兼容性测试、硬件兼容性测试</p>
+<h2 id="八国际化和本地化测试">八、国际化和本地化测试</h2>
+<h3 id="软件本地化和国际化">软件本地化和国际化</h3>
+<p>软件国际化：<em>I18N</em>是借助<em>功能设计和代码实现</em>中软件系统<em>有能力处理多种语言和不同文化</em>，使创建不同语言版本时，不需要重新编写代码的软件工程方法。</p>
+<p>软件本地化：<em>L10N</em>是将一个软件产品按特定国家/地区或语言市场的<em>需要进行加工</em>，使之满足特定市场上的用户对语言和文化的特殊要求的软件生产活动。</p>
+<blockquote>
+<p>I18N是L10N的基础和前提，为L10N做准备</p>
+<p>L10N是I18N向特定本地语言环境的转换</p>
+<p>G11N (globalization)= I18N + L10N</p>
+<p>I18N 是软件产品源语言开发的一部分，属于Engineering</p>
+<p>L10N 可以独立于Engineering，可由第三方完成</p>
+</blockquote>
+<figure>
+<img src="image-20230610200952397.png" alt="软件本地化和国际化">
+<figcaption aria-hidden="true">软件本地化和国际化</figcaption>
+</figure>
+<h3 id="软件本地化测试">软件本地化测试</h3>
+<ul>
+<li>功能性测试，所有基本功能、安装、升级等测试；</li>
+<li>可用性测试，包括用户界面、度量衡和时区等；</li>
+<li>兼容性调试，包括硬件兼容性、版本兼容性等测试；</li>
+<li>翻译测试，包括语言完整性、术语准确性等的检查；</li>
+<li>文化、宗教、喜好等适用性测试</li>
+<li>手册验证，包括联机文件、在线帮助、PDF文件等测试</li>
+</ul>
+<h2 id="九软件测试自动化">九、软件测试自动化</h2>
+<h3 id="测试自动化的内涵">测试自动化的内涵</h3>
+<p>自动化测试（automated
+test）是相对手工测试而存在的一个概念，由手工逐个地运行测试用例的操作过程被测试工具自动执行的过程所代替。</p>
+<p><strong>测试工具的使用</strong>是自动化测试的主要特征。</p>
+<blockquote>
+<p>自动化测试焦点集中在<em>测试执行</em>，主要是由测试工具自动地完成测试。</p>
+<p>测试自动化指“一切可以由计算机系统自动完成的测试任务都已经由计算机系统或软件工具、程序来承担并自动执行”。</p>
+<p>测试自动化意味着<em>测试全过程的自动化和测试管理工作的自动化</em></p>
+</blockquote>
+<h3 id="测试自动化实现的原理">测试自动化实现的原理</h3>
+<p>代码分析：类似于高级编译系统，在工具中定义类/对象/函数/变量等定义规则、语法规则等，在分析时对代码进行语法扫描，找出不符合编码规范的地方。</p>
+<p>对象识别（Windows 对象 、Mac 对象、Web DOM对象）</p>
+<p>脚本技术：线性脚本、结构化脚本、数据驱动脚本、关键字驱动脚本</p>
+<p>自动比较技术：静态比较和动态比较，简单比较和复杂比较，敏感性测试比较和健壮性测试比较，比较过滤器</p>
+<p>测试自动化系统的构成：测试工具的分类、测试工具的选择、测试自动化普遍存在的问题、自动化测试的引入和应用</p>
+<h3 id="测试自动化的实施">测试自动化的实施</h3>
+<p>测试工具的分类：根据测试方法，分为黑盒测试工具、白盒测试工具、静态测试工具和动态测试工具；根据来源，分为开源测试工具、商业测试工具、自主研发测试工具和第三方测试工具；根据测试的对象，分为单元测试工具、功能测试工具、性能测试工具、测试管理工具。</p>
+<p>测试工具的选择</p>
+<p>测试自动化普遍存在的问题：不正确的观念或不现实的期望、测试工具本身的问题影响测试的质量、测试脚本的质量低劣等等。</p>
+<p>自动化测试的引入和应用：</p>
+<ul>
+<li>找准测试自动化的切入点</li>
+<li>把测试开发纳入整个软件开发体系</li>
+<li>测试自动化依赖测试流程和测试用例</li>
+<li>软件测试自动化的投入较大</li>
+<li>进行资源的合理调度</li>
+</ul>
+<h3 id="自动化测试工作流程">自动化测试工作流程</h3>
+<ul>
+<li>计划（收集测试信息）：收集测试信息，计划自动化测试</li>
+<li>创建（建立基本测试）：记录用户操作形成基本测试</li>
+<li>核实和提高（提高基本测试）：对回放和测试提高自动化测试</li>
+<li>整合（整体测试）：运行多种测试检查数据流</li>
+</ul>
+<h3 id="自动化测试框架">自动化测试框架</h3>
+<p>性能测试工具LoadRunner组件：</p>
+<ul>
+<li>虚拟用户发生器（Visual User Generator，VuGen）</li>
+<li>控制器（Controller）</li>
+<li>负载发生器（Load Generators）</li>
+<li>分析器（Analysis）</li>
+</ul>
+<p>LoadRunner工作过程：</p>
+<p>①通过VuGen来设计脚本</p>
+<p>②通过Control设计场景</p>
+<p>③通过负载发生器实现虚拟用户并发执行</p>
+<p>④通过Control监控场景</p>
+<p>⑤通过分析器分析结果</p>
+<p>功能测试工具QTP：</p>
+<ul>
+<li>录制测试脚本：对象识别</li>
+<li>编辑测试脚本：加验证点，优化脚本</li>
+<li>调试脚本</li>
+<li>执行：验证</li>
+<li>结果分析：确定缺陷</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Ryan-Nightwish.github.io">Ryan Wong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://ryan-nightwish.github.io/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/">http://ryan-nightwish.github.io/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Ryan-Nightwish.github.io" target="_blank">Skylark Space</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/15/%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E7%9F%A5%E8%AF%86%E7%82%B9/" title="服务开发技术知识点"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">服务开发技术知识点</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/15/web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9F%A5%E8%AF%86%E7%82%B9/" title="web数据管理复习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">web数据管理复习</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/04/23/RESTful/" title="RESTful"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-23</div><div class="title">RESTful</div></div></a></div><div><a href="/2023/06/15/%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E7%9F%A5%E8%AF%86%E7%82%B9/" title="服务开发技术知识点"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-15</div><div class="title">服务开发技术知识点</div></div></a></div><div><a href="/2023/05/08/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" title="软件项目管理课程笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-08</div><div class="title">软件项目管理课程笔记</div></div></a></div><div><a href="/2023/06/15/web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9F%A5%E8%AF%86%E7%82%B9/" title="web数据管理复习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-15</div><div class="title">web数据管理复习</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ryan Wong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Ryan-Nightwish" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:718102754@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">软件测试复习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%BC%95%E8%AE%BA"><span class="toc-number">1.1.</span> <span class="toc-text">一、引论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%9B%E8%A1%8C%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">为什么进行软件测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="toc-number">1.1.2.</span> <span class="toc-text">什么是软件测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">软件测试与软件开发的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">二、软件测试的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%BC%BA%E9%99%B7%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">软件缺陷定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%99%B7%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.2.2.</span> <span class="toc-text">缺陷产生的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E8%BD%AF%E4%BB%B6%E7%BC%BA%E9%99%B7%E7%9A%84%E4%BB%A3%E4%BB%B7"><span class="toc-number">1.2.3.</span> <span class="toc-text">修复软件缺陷的代价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9D%9F%E7%9A%84%E6%A0%87%E5%87%86"><span class="toc-number">1.2.4.</span> <span class="toc-text">测试结束的标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.5.</span> <span class="toc-text">软件测试的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%8C%83%E7%95%B4"><span class="toc-number">1.2.6.</span> <span class="toc-text">软件测试的工作范畴</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">三、软件测试的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.1.</span> <span class="toc-text">白盒测试的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.2.</span> <span class="toc-text">黑盒测试的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-number">1.3.3.</span> <span class="toc-text">什么是测试用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%AE%BE%E8%AE%A1%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="toc-number">1.3.4.</span> <span class="toc-text">为什么要设计测试用例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.5.</span> <span class="toc-text">白盒测试方法的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.3.6.</span> <span class="toc-text">黑盒测试方法的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.3.7.</span> <span class="toc-text">有限自动机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E4%B8%8E%E8%A7%84%E8%8C%83"><span class="toc-number">1.4.</span> <span class="toc-text">四、软件测试流程与规范</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%84%9A%E6%9C%AC%E6%B5%8B%E8%AF%95%E5%92%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E6%B5%8B%E8%AF%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">基于脚本测试和探索式测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tmmitesting-maturity-model-integration"><span class="toc-number">1.4.2.</span> <span class="toc-text">TMMi（Testing Maturity
+Model integration）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tpitest-process-improvement"><span class="toc-number">1.4.3.</span> <span class="toc-text">TPI（Test Process
+Improvement）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ctpcritical-test-process"><span class="toc-number">1.4.4.</span> <span class="toc-text">CTP（Critical Test Process）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stepsystematic-test-and-evaluation-process"><span class="toc-number">1.4.5.</span> <span class="toc-text">STEP（Systematic
+Test and Evaluation Process）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tmaptest-management-approach"><span class="toc-number">1.4.6.</span> <span class="toc-text">TMap（Test Management
+Approach）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B8%8E%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95"><span class="toc-number">1.5.</span> <span class="toc-text">五、单元测试与集成测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.1.</span> <span class="toc-text">单元测试的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.2.</span> <span class="toc-text">集成测试的概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95"><span class="toc-number">1.6.</span> <span class="toc-text">六、系统测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.6.1.</span> <span class="toc-text">系统测试的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%9B%9E%E5%BD%92%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">1.6.2.</span> <span class="toc-text">功能、回归、性能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%9D%9E%E5%8A%9F%E8%83%BD%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="toc-number">1.6.3.</span> <span class="toc-text">其他非功能性测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E9%AA%8C%E6%94%B6%E6%B5%8B%E8%AF%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、验收测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E6%94%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.7.1.</span> <span class="toc-text">验收测试的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%CE%B1%CE%B2%E6%B5%8B%E8%AF%95"><span class="toc-number">1.7.2.</span> <span class="toc-text">α&#x2F;β测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%86%85%E5%AE%B9"><span class="toc-number">1.7.3.</span> <span class="toc-text">测试内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%9B%BD%E9%99%85%E5%8C%96%E5%92%8C%E6%9C%AC%E5%9C%B0%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="toc-number">1.8.</span> <span class="toc-text">八、国际化和本地化测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%9C%AC%E5%9C%B0%E5%8C%96%E5%92%8C%E5%9B%BD%E9%99%85%E5%8C%96"><span class="toc-number">1.8.1.</span> <span class="toc-text">软件本地化和国际化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%9C%AC%E5%9C%B0%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="toc-number">1.8.2.</span> <span class="toc-text">软件本地化测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-number">1.9.</span> <span class="toc-text">九、软件测试自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E5%86%85%E6%B6%B5"><span class="toc-number">1.9.1.</span> <span class="toc-text">测试自动化的内涵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.9.2.</span> <span class="toc-text">测试自动化实现的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E5%AE%9E%E6%96%BD"><span class="toc-number">1.9.3.</span> <span class="toc-text">测试自动化的实施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.9.4.</span> <span class="toc-text">自动化测试工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6"><span class="toc-number">1.9.5.</span> <span class="toc-text">自动化测试框架</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E7%9F%A5%E8%AF%86%E7%82%B9/" title="服务开发技术知识点">服务开发技术知识点</a><time datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="软件测试复习笔记">软件测试复习笔记</a><time datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/15/web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9F%A5%E8%AF%86%E7%82%B9/" title="web数据管理复习">web数据管理复习</a><time datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/27/ResNet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="ResNet论文阅读">ResNet论文阅读</a><time datetime="2023-05-27T11:21:25.000Z" title="发表于 2023-05-27 19:21:25">2023-05-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/05/11/Illustrated-Transformer%E7%BF%BB%E8%AF%91/" title="Illustrated Transformer翻译">Illustrated Transformer翻译</a><time datetime="2023-05-11T11:31:59.000Z" title="发表于 2023-05-11 19:31:59">2023-05-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Ryan Wong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

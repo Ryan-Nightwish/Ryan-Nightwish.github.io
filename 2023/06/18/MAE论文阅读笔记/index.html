@@ -1,0 +1,517 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MAE论文阅读笔记 | Skylark Space</title><meta name="author" content="Ryan Wong"><meta name="copyright" content="Ryan Wong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MAE论文阅读笔记  原作LH，搬运，已同意 代码链接: https:&#x2F;&#x2F;github.com&#x2F;facebookresearch&#x2F;mae 会议&#x2F;期刊分区: CVPR 年份: 2022 论文链接: https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;stamp&#x2F;stamp.jsp?tp&#x3D;&amp;arnumber&#x3D;9879206  1. 标题 Masked Autoencoder Are Sca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MAE论文阅读笔记">
+<meta property="og:url" content="http://ryan-nightwish.github.io/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Skylark Space">
+<meta property="og:description" content="MAE论文阅读笔记  原作LH，搬运，已同意 代码链接: https:&#x2F;&#x2F;github.com&#x2F;facebookresearch&#x2F;mae 会议&#x2F;期刊分区: CVPR 年份: 2022 论文链接: https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;stamp&#x2F;stamp.jsp?tp&#x3D;&amp;arnumber&#x3D;9879206  1. 标题 Masked Autoencoder Are Sca">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ryan-nightwish.github.io/img/default_cover.png">
+<meta property="article:published_time" content="2023-06-18T10:24:09.000Z">
+<meta property="article:modified_time" content="2023-06-18T10:31:25.984Z">
+<meta property="article:author" content="Ryan Wong">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ryan-nightwish.github.io/img/default_cover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://ryan-nightwish.github.io/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MAE论文阅读笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-18 18:31:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/styles.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/static-butterfly/dist/css/index.min.css"><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/default_cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Skylark Space"><span class="site-name">Skylark Space</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MAE论文阅读笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-18T10:24:09.000Z" title="发表于 2023-06-18 18:24:09">2023-06-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-18T10:31:25.984Z" title="更新于 2023-06-18 18:31:25">2023-06-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MAE论文阅读笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="mae论文阅读笔记">MAE论文阅读笔记</h1>
+<blockquote>
+<p>原作LH，搬运，已同意</p>
+<p>代码链接: https://github.com/facebookresearch/mae</p>
+<p>会议/期刊分区: CVPR</p>
+<p>年份: 2022</p>
+<p>论文链接:
+https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=9879206</p>
+</blockquote>
+<h2 id="标题">1. 标题</h2>
+<p><strong>Masked Autoencoder Are Scalable Vision Learners</strong></p>
+<ul>
+<li><p><strong>Scalable</strong>：可拓展的</p></li>
+<li><p><strong>Vision
+Learner</strong>：这里没有写成classifier或者其他的东西，因为它能够用到的地方相对广一些，他是一个backbone模型</p>
+<p>💡
+backbone通常指神经网络模型的主干部分，也就是提取特征的部分</p></li>
+<li><p><strong>Masked</strong>：masked来源于BERT，每次挖掉一些东西然后去预测被挖掉的东西</p></li>
+<li><p><strong>Autoencoder</strong>：这里的auto不是自动的意思，而是“自”的意思，标号和样本（y和x）来自于同一个东西。在NLP中，大家都是可以理解的，但是在计算机视觉中，图片的标号很少来自图片本身，所以作者在这里加上了auto，意在指出和计算机视觉中其他的encoder相比，这里的标号也就是图片本身，这样能跟之前的很多工作区分开来。</p></li>
+</ul>
+<h2 id="摘要">2. 1摘要</h2>
+<ol type="1">
+<li><p>MAE的实现路径非常简单，随机地盖住图片中地一些块（patches），然后再去重构这些被盖住的像素（the
+missing pixels），这个思想来自于BERT中的带掩码的语言模型。</p></li>
+<li><p><strong>非对称的encoder-decoder架构</strong></p>
+<ul>
+<li>编码器只作用在<strong>可见的</strong>patch中，对于丢掉的patch，编码器不会对它进行编码，这样能够节省一定的计算时间；</li>
+<li>解码器是一个比较轻量的解码器，拿到编码器的输出之后，重构被遮挡住的块。</li>
+</ul></li>
+<li><p>发现遮住了大量的块（比如说把75%的块全部遮住），可以迫使模型去学习一些更好的特征，从而得到一个较好的自监督训练效果。</p>
+<p>💡
+如果只是遮住几块的话，只需要进行插值就可以出来了，模型可能学不到特别的东西。编码器只需要编码1/4大小的图片，可以降低计算量，训练加速3倍或者以上。</p></li>
+<li><p>结果：最终作者只使用一个最简单的ViT-Huge模型（模型来自ViT这篇文章），在ImageNet-1K（100万张图片）上预训练，精度也能达到87.8%</p></li>
+<li><p>本文亮点是，只使用小的数据集（ImageNet-1k，100万张图片），而且是通过自监督，就能够做到跟之前可能效果一样好的模型了。</p></li>
+<li><p>这个模型主要是用来做迁移学习，它证明了在迁移学习的其他任务上表现也非常好</p></li>
+</ol>
+<h2 id="示意图">2. 2示意图</h2>
+<figure>
+<img src="Untitled.png" alt="MAE结构">
+<figcaption aria-hidden="true">MAE结构</figcaption>
+</figure>
+<ol type="1">
+<li>原图的patch以从左到右，从上到下的顺序排布；</li>
+<li>输入一张图，将它切成一个一个的小块（patch），图中涂成灰色的小块就是被盖住的部分。去掉那些被盖住的块，剩下的小块已经不太多了，因为3/4的地方都已经被盖住了；</li>
+<li>将剩下的小块放进encoder（也就是ViT）中，得到每一个块对应的特征。然后将输出拉长，把被盖住的那些块重新放回到原来的位置，得到原始图片拉成的一条向量；</li>
+<li>将得到的长向量输入到解码器中，解码器会尝试将里面的像素信息全部重构回来，使得训练出来的target就是原始图片；</li>
+<li>编码器画的稍微比解码器要宽一点，意思是说模型主要的计算来自于编码器，因为最重要的就是对图片的像素进行编码，这是在预训练的时候所干的事情；</li>
+<li><strong>对于下游任务，就只需要编码器就够了</strong>，直接切成一个一个的小块，然后放进ViT，就能得到输入图片的特征表达，然后用来做所要处理的任务。</li>
+</ol>
+<h2 id="结论">3. 结论</h2>
+<ol type="1">
+<li>在计算机视觉中，还是主要靠有标号的数据作为训练。这篇文章的工作通过在ImageNet数据集上通过自编码器学习到可以媲美有标号的时候的效果，所以是一个非常强有力的工作。</li>
+<li>对于语言来说，一个词是一个语义的单元，它里面所包含的语义信息比较多，在图片中虽然一个patch也含有一定的语义信息，但它不是语义的分割（也就是说这个patch中并不含有特定的物体），但是即使是在这样的情况下，MAE也能做很复杂的一些任务。</li>
+<li>作者认为MAE或者说是transformer确实能够学到隐藏的比较好的语义表达。</li>
+</ol>
+<h2 id="导言为何masked自编码模型在cv和nlp领域应用不一样">4.
+导言→为何masked自编码模型在CV和NLP领域应用不一样？</h2>
+<h3 id="架构差异">4.1 架构差异</h3>
+<p>之前，CV领域都是用的CNN网络，而CNN中的卷积不好做掩码操作的，因为卷积核滑动时，无法识别遮盖的边界，不好将<strong>masked
+patches</strong>单独剔除，导致后面不好将图片还原（Transformer中，和其他词区分开来）。但是作者说，ViT成功将Transformer应用到计算机视觉领域，所以这个问题不再有了。</p>
+<h3 id="信息密度不同">4.2 信息密度不同</h3>
+<ol type="1">
+<li>在自然语言中，一个词就是一个语义的实体，比如说字典中对一个词的解释就是很长的一段话，所以一句话中很难去去掉几个词（这样做完形填空才有意义）；</li>
+<li>在图片中，像素是比较冗余的，取决于相机的分辨率有多大。如果只是简单去掉一些块的话，很有可能通过邻居的像素值进行插值还原出来；</li>
+<li>作者的做法是，mask很高比例的像素块（比如75%），将图片中一大片都去掉，剩下的块离得比较远，他们跟这个块的关系就不那么冗余了，大大降低图片的冗余性；</li>
+<li>模型必须学习全局信息，而不是仅仅学一个局部模型就可以进行插值还原；</li>
+</ol>
+<p>关于此点论证，看上面图2.3.4就可以发现：仅仅一些局部的，很稀疏的块，就可以重构全局图片。</p>
+<h3 id="解码差异">4.3 解码差异</h3>
+<ol type="1">
+<li>NLP中需要预测masked
+tokens，token本身就是一种比较高级一些的语义表示，而来自编码器的特征也是高度语义的，与需要解码的目标之间的
+gap 较小，所以只需要一个简单的全连接层就可以解码这些tokens；</li>
+<li>ViT最后需要的是图片特征，所以也只需要MLP就可以解码；</li>
+<li>MAE中需要还原the missing
+pixels，这些像素是比较低层次的表示，所以一个MLP可能是不够的。</li>
+<li>在图片分类、目标检测等任务上，输出层，也就是解码器，就是一个全连接层就够了；</li>
+<li>要将自编码器的高级语义特征解码至低级语义层级，比如语义分割对每个像素做像素级别的输出，需要比较复杂的转置卷积网络才能完成解码。</li>
+</ol>
+<p>正是基于以上分析，作者才提出本文的两个核心设计：<strong>高掩码率以及非对称编-解码器</strong>。</p>
+<p><strong>使用了MAE预训练之后，就可以只使用ImageNet-1K（100万数据）训练ViT
+large和ViThuge，达到在ViT中要使用100倍大小以上的训练数据才能做出来的效果，而且MAE预训练是不用标号的。</strong></p>
+<h2 id="相关工作">5. 相关工作</h2>
+<h3 id="带掩码的语言模型">5.1 带掩码的语言模型</h3>
+<h3 id="自编码器在视觉中的应用">5.2 自编码器在视觉中的应用</h3>
+<p>MAE其实也是一种形式上的带去噪的自编码，因为将图片中的某一块遮住，就等于是在图片中加入了很多噪音，但是它跟传统的DAE（Denoising
+autoencoder）不太一样，因为它毕竟基于ViT带掩码的编码器在计算机视觉中的应用</p>
+<p>本文不是第一个做这个工作的，之前已经有很多工作了。比如说iGPT就是GPT在image上的应用；ViT的论文在最后一段也讲了怎样用BERT来训练模型；另外还有BEiT，它也是BERT在image上的应用，它和MAE的不同之处在于，它对每一个patch都给了一个离散标号，更接近于BERT，但是在MAE中直接还原的是原始的像素信息</p>
+<h3 id="自监督学习">5.3 自监督学习</h3>
+<p>比如最近一两年特别火的对比学习，它在这一块主要使用的是数据增强，而MAE所用的和它不一样</p>
+<h2 id="模型">6. 模型</h2>
+<ol type="1">
+<li>MAE跟所有的编码器一样，将观察到的信号映射到一个latnet
+representation（潜表示）中，这个潜表示可以认为是语义空间上的表示，然后再通过解码器将这个潜表示用来重构出原始的信号；</li>
+<li>与经典的自动编码器不同，作者采用了一种非对称设计，自编码器看到了部分数据，然后用它来重构完整的原始信号。</li>
+</ol>
+<h3 id="掩码是如何工作的">6.1 掩码是如何工作的</h3>
+<ol type="1">
+<li><strong>随机均匀采样</strong>：在不替换的情况下，按照均匀分布对patches进行随机采样，采到的样本保留，剩下的全部mask掉；</li>
+<li>采样少量的块，使得它们的冗余度不是很高，任务就不是那么简单。</li>
+</ol>
+<h3 id="编码器">6.2 编码器</h3>
+<ol type="1">
+<li>没有做任何改动的ViT，只作用于可见的那些块中，具体的做法跟ViT是一样的：对每一块做线性的投影，再加上位置信息，作为输入；</li>
+<li>被盖住的patch就不会进去了。如果有25%被选中，那么进入ViT的话就只有25%的样本，降低计算量。</li>
+</ol>
+<h3 id="解码器">6.3 解码器</h3>
+<ol type="1">
+<li>需要看到所有的块，包括没有被盖住的块（已经通过编码器表示成了潜表示）和被盖住的块（没有进入编码器）</li>
+<li>对被盖住的块，解码器<strong>通过同一个向量来表示，这个向量通过学习得到。</strong></li>
+<li>解码器其实就是另外一个transformer，所以<strong>需要加入位置信息</strong>，不然就无法区分它对应的到底是哪一个是掩码</li>
+<li>这里有一点不确定：要不要对那些编码器输出的潜表示也加上位置信息，因为它们其实已经加上过一次了，那么这个地方要不要再加上一次？</li>
+<li>解码器主要只在预训练的时候使用，当将模型用于做一些别的任务的时候，只需要用编码对一个图片进行编码就可以了</li>
+<li>解码器的架构比较小，计算开销不到编码器的1/10</li>
+</ol>
+<h3 id="怎样重构出原始的像素">6.4 怎样重构出原始的像素</h3>
+<ol type="1">
+<li>解码器的最后一层是一个线性层。如果所切割成的一块中是16<em>16的像素的话，那么这个线性层就会投影到长为256的这样一个维度，再reshape成16</em>16，就能还原出原始的像素信息了；</li>
+<li>损失函数使用的是MSE。预测和原始的真正的像素相减再平方。只在被盖住的那些块上面使用MSE；</li>
+<li>对要预测的像素值做一次normalization。对每一个块里面的像素使它的均值变为0、方差变为1，使得在数值上更加稳定一点；</li>
+<li>没写清楚在预测的时候怎么办，在训练的时候当然知道标号的那些东西，可以把均值和方差算出来，但是预测的时候呢？</li>
+</ol>
+<h3 id="简单实现">6.5 简单实现</h3>
+<ol type="1">
+<li>将图像划分成 patches；</li>
+<li>对各个 patch 进行 embedding(实质是通过全连接层)，生成
+tokens，并加入位置信息；</li>
+<li>随机均匀采样。将序列随机打乱（shuffle），前25%作为unmask tokens 输入
+Encoder，后面的丢掉→就是随机采样；</li>
+<li>编码后的 tokens 与 masked tokens（
+可以学习的向量，加入位置信息）unshuffle，还原到原来的顺序，然后传给
+Decoder；</li>
+<li>如果 Encoder 编码后的 token 的维度与 Decoder
+要求的输入维度不一致，则需要先经过 linear projection 将维度映射到符合
+Decoder 的要求；</li>
+<li>Decoder 解码后取出 masked tokens 对应的部分送入到全连接层，对 masked
+patches 的像素值进行预测，最后将预测结果与 masked patches 进行比较，计算
+MSE loss。</li>
+</ol>
+<h2 id="实验">7. 实验</h2>
+<ol type="1">
+<li>在ImageNet-1K数据集（100万张数据集）上先做自监督的预训练，然后在同样的数据集上做有标签的监督训练</li>
+<li>两种做法</li>
+</ol>
+<p>💡 end to end的微调：允许该整个模型所有的可学习的参数 linear
+probing：只允许改最后一层的线性输出层</p>
+<ol type="1">
+<li>在验证集上报告top1的精度，所使用的是中心剪裁的24<em>24的图片，基线用的是vit
+large（vit-l/16，16表示的是图片块是16</em>16的）。</li>
+</ol>
+<h3 id="imagenet实验">7.1 ImageNet实验</h3>
+<p>下图表格中比较的是三种情况：</p>
+<ul>
+<li>scratch，original：ViT-L/16模型在ImageNet-1k上从头训练，效果其实不是很稳定。（200epoch）</li>
+</ul>
+<figure>
+<img src="Untitled%201.png" alt="ImageNet实验">
+<figcaption aria-hidden="true">ImageNet实验</figcaption>
+</figure>
+<ul>
+<li><p>scratch，our
+impl.：ViT-L/16加上比较强的正则，从72.5提升到了82.5（详见附录A2）。</p>
+<p>💡
+VIT原文中一直说需要很大的数据集才预训练出好的模型，但是后来大家发现，如果加入合适的正则项，在小一点的数据集上（ImageNet-1k）也能够训练出好的效果。</p></li>
+<li><p>baseline
+MAE：先使用MAE做预训练，然后在ImageNet上做微调，这时候就不需要训练完整的200个epoches，只需要50个就可以了，从82.5提升到了84.9</p>
+<p>💡
+因为数据集并没有发生变化（预训练和后面的微调都是用的ImageNet），这就表示MAE能够从图片上也能学到不错的信息，使得后面有所提升</p></li>
+</ul>
+<h3 id="深度宽度变化mask策略数据增强">7.2
+深度宽度变化/mask策略/数据增强</h3>
+<figure>
+<img src="Untitled%202.png" alt="参数实现">
+<figcaption aria-hidden="true">参数实现</figcaption>
+</figure>
+<ol type="1">
+<li>每个子表中，第一列（ft）表示所有可以学习的权重都跟着调，第二列（lin）表示只调最后一个线性层。</li>
+<li>表a讲的是解码器的深度（需要用到多少个transformer块）。可以发现ft方式虽然比较贵，但是效果会好很多。使用8块比较好，不过解码器深度关系并不是很大，都是84左右。如果只调最后一层的话，用深一点的会比较好</li>
+<li>表b讲的是解码器的宽度（每个token表示成一个多长的向量），512比较好</li>
+<li>表c讲的是在编码器中要不要加入被盖住的那些块。结果显示，不加入被盖住的那些块，精度反而更高一些，而且计算量更少（降低3.3倍）。所以本文采用的非对称的架构，不仅是在性能上更好，在精度上也更好一些</li>
+<li>表d讲的是重建目标对比。 第一行：MAE现行做法
+第二行：预测时对每个patch内部做normalization，效果最好； 第三行：PCA降维
+第四行：BEiT的做法，通过vit把每一块映射到一个离散的token上面再做预测。
+从表中可以发现，在fine-tune的话，值都是差不多的，所以在值差不多的情况下，当然是倾向于使用更简单的办法</li>
+<li>表e讲的是如何做数据增强。none表示什么都不做，第二行表示只裁剪（固定大小），第三行表示按照随机的大小裁剪，最后一行表示再加上一些颜色的变化。从表中可以发现，做简单的随即大小的裁剪，效果就已经很不错了，所以作者说MAE对于数据的增强不那么敏感；</li>
+<li>表f讲的是采样策略。随机采样，按块采样，按网格采样。发现随机采样这种做法最简单，效果也最好。</li>
+</ol>
+<figure>
+<img src="Untitled%203.png" alt="掩膜策略">
+<figcaption aria-hidden="true">掩膜策略</figcaption>
+</figure>
+<h3 id="mask比例">7.3 mask比例</h3>
+<figure>
+<img src="/Untitled%204.png" alt="Untitled">
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>掩码率越大，不管是对fine-tune也好，还是对于只调最后一层来讲也好，效果都是比较好的。特别是只调最后一层的话，对掩码率相对来讲更加敏感一点。</p>
+<h3 id="训练时间">7.4 训练时间</h3>
+<figure>
+<img src="/Untitled%205.png" alt="Untitled">
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<ol type="1">
+<li>表中使用vit-large而且解码器只使用一层transformer块的时候，精度也是不错的，时间是最小的，和第一行（使用所有的带掩码的块）相比，加速是3.7倍。如果是vit-huge的话，加速时间也是比较多的</li>
+<li>绝对时间：这里使用的是128个TPU
+v3的core，而且使用的是tensorflow实现，训练的时间是10个小时</li>
+</ol>
+<h3 id="预训练的轮数">7.5 预训练的轮数</h3>
+<figure>
+<img src="/Untitled%206.png" alt="Untitled">
+<figcaption aria-hidden="true">Untitled</figcaption>
+</figure>
+<p>图中可以看到，在ImageNet-1k上训练1000个数据轮的话，能够看到精度的提升，这也是一个非常不错的性质，说明在一直训练的情况下，过拟合也不是特别严重（1000轮其实是非常多的，一般在ImageNet上训练200轮就差不多了）</p>
+<h3 id="跟前面一些工作对比">7.6 跟前面一些工作对比</h3>
+<figure>
+<img src="Untitled%207.png" alt="效果对比">
+<figcaption aria-hidden="true">效果对比</figcaption>
+</figure>
+<p>基本上MAE的效果是最好的</p>
+<h3 id="微调层数对比">7.7 微调层数对比</h3>
+<figure>
+<img src="Untitled%208.png" alt="局部微调">
+<figcaption aria-hidden="true">局部微调</figcaption>
+</figure>
+<ol type="1">
+<li>预训练模型做微调的效果是比只做特征提取的效果更好的，但是训练时间会更长。所以作者试验了一下，微调不同的层数，模型的效果如何。</li>
+<li>上图中，x轴表示的是有多少个transformer块要被调（这些层参数可以训练，剩下层被冻结），y轴表示的是精度。</li>
+<li>可以看到，MAE基本只需要微调最后4层就可以了。这表示底部层学到的东西稍微是比较低层次一点，在换另外一个任务的时候也不需要变化太多，但是上面的层还是和任务比较相关的，最好还是做一些调整</li>
+</ol>
+<h3 id="迁移学习的效果">7.8 迁移学习的效果</h3>
+<p>下图中的表四和表五做的是COCO数据集上的目标检测和分割</p>
+<figure>
+<img src="Untitled%209.png" alt="迁移学习">
+<figcaption aria-hidden="true">迁移学习</figcaption>
+</figure>
+<p>从表四中可以发现用MAE当作主干网络之后效果是最好的</p>
+<h2 id="参考资料">8. 参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1sq4y1q77t/?spm_id_from=333.337.search-card.all.click&amp;vd_source=f1e63b72d41565fff5790172980ab4db">MAE
+论文逐段精读【论文精读】_哔哩哔哩_bilibili</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Ryan-Nightwish.github.io">Ryan Wong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://ryan-nightwish.github.io/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">http://ryan-nightwish.github.io/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Ryan-Nightwish.github.io" target="_blank">Skylark Space</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></div><div class="post_share"><div class="social-share" data-image="/img/default_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/06/15/%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E7%9F%A5%E8%AF%86%E7%82%B9/" title="服务开发技术知识点"><img class="cover" src="/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">服务开发技术知识点</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/04/27/Transformer%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="Transformer论文笔记"><img class="cover" src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-27</div><div class="title">Transformer论文笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ryan Wong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Ryan-Nightwish" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:718102754@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mae%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">MAE论文阅读笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">1. 标题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.2.</span> <span class="toc-text">2. 1摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">1.3.</span> <span class="toc-text">2. 2示意图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.4.</span> <span class="toc-text">3. 结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E8%A8%80%E4%B8%BA%E4%BD%95masked%E8%87%AA%E7%BC%96%E7%A0%81%E6%A8%A1%E5%9E%8B%E5%9C%A8cv%E5%92%8Cnlp%E9%A2%86%E5%9F%9F%E5%BA%94%E7%94%A8%E4%B8%8D%E4%B8%80%E6%A0%B7"><span class="toc-number">1.5.</span> <span class="toc-text">4.
+导言→为何masked自编码模型在CV和NLP领域应用不一样？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 架构差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%AF%86%E5%BA%A6%E4%B8%8D%E5%90%8C"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 信息密度不同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E7%A0%81%E5%B7%AE%E5%BC%82"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 解码差异</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.6.</span> <span class="toc-text">5. 相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E6%8E%A9%E7%A0%81%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 带掩码的语言模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8%E5%9C%A8%E8%A7%86%E8%A7%89%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 自编码器在视觉中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.6.3.</span> <span class="toc-text">5.3 自监督学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.7.</span> <span class="toc-text">6. 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A9%E7%A0%81%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 掩码是如何工作的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 编码器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E7%A0%81%E5%99%A8"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 解码器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E6%A0%B7%E9%87%8D%E6%9E%84%E5%87%BA%E5%8E%9F%E5%A7%8B%E7%9A%84%E5%83%8F%E7%B4%A0"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 怎样重构出原始的像素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.7.5.</span> <span class="toc-text">6.5 简单实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.8.</span> <span class="toc-text">7. 实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#imagenet%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.8.1.</span> <span class="toc-text">7.1 ImageNet实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AE%BD%E5%BA%A6%E5%8F%98%E5%8C%96mask%E7%AD%96%E7%95%A5%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA"><span class="toc-number">1.8.2.</span> <span class="toc-text">7.2
+深度宽度变化&#x2F;mask策略&#x2F;数据增强</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mask%E6%AF%94%E4%BE%8B"><span class="toc-number">1.8.3.</span> <span class="toc-text">7.3 mask比例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%97%B6%E9%97%B4"><span class="toc-number">1.8.4.</span> <span class="toc-text">7.4 训练时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E8%AE%AD%E7%BB%83%E7%9A%84%E8%BD%AE%E6%95%B0"><span class="toc-number">1.8.5.</span> <span class="toc-text">7.5 预训练的轮数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%9F%E5%89%8D%E9%9D%A2%E4%B8%80%E4%BA%9B%E5%B7%A5%E4%BD%9C%E5%AF%B9%E6%AF%94"><span class="toc-number">1.8.6.</span> <span class="toc-text">7.6 跟前面一些工作对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E8%B0%83%E5%B1%82%E6%95%B0%E5%AF%B9%E6%AF%94"><span class="toc-number">1.8.7.</span> <span class="toc-text">7.7 微调层数对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%95%88%E6%9E%9C"><span class="toc-number">1.8.8.</span> <span class="toc-text">7.8 迁移学习的效果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.9.</span> <span class="toc-text">8. 参考资料</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="MAE论文阅读笔记"><img src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MAE论文阅读笔记"/></a><div class="content"><a class="title" href="/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="MAE论文阅读笔记">MAE论文阅读笔记</a><time datetime="2023-06-18T10:24:09.000Z" title="发表于 2023-06-18 18:24:09">2023-06-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/15/%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E7%9F%A5%E8%AF%86%E7%82%B9/" title="服务开发技术知识点"><img src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="服务开发技术知识点"/></a><div class="content"><a class="title" href="/2023/06/15/%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E7%9F%A5%E8%AF%86%E7%82%B9/" title="服务开发技术知识点">服务开发技术知识点</a><time datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="软件测试复习笔记"><img src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软件测试复习笔记"/></a><div class="content"><a class="title" href="/2023/06/15/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="软件测试复习笔记">软件测试复习笔记</a><time datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/15/web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9F%A5%E8%AF%86%E7%82%B9/" title="web数据管理复习"><img src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="web数据管理复习"/></a><div class="content"><a class="title" href="/2023/06/15/web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9F%A5%E8%AF%86%E7%82%B9/" title="web数据管理复习">web数据管理复习</a><time datetime="2023-06-15T01:47:23.000Z" title="发表于 2023-06-15 09:47:23">2023-06-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/27/ResNet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="ResNet论文阅读"><img src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ResNet论文阅读"/></a><div class="content"><a class="title" href="/2023/05/27/ResNet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="ResNet论文阅读">ResNet论文阅读</a><time datetime="2023-05-27T11:21:25.000Z" title="发表于 2023-05-27 19:21:25">2023-05-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Ryan Wong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RoBERTa的变化 | Skylark Space</title><meta name="author" content="Ryan Wong"><meta name="copyright" content="Ryan Wong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="RoBERTa的变化  原文：RoBERTa: A Robustly Optimized BERT Pretraining Approach 年份：2019 引用：7874 参考：RoBERTa - 论文解读，Roberta的原理介绍   :star: 它在模型层面没有改变Google的Bert，改变的只是预训练的方法。  更大的mini-batch 原本的BERT-base的batch size">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RoBERTa的变化">
+<meta property="og:url" content="http://ryan-nightwish.github.io/2023/07/24/RoBERTa%E7%9A%84%E5%8F%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Skylark Space">
+<meta property="og:description" content="RoBERTa的变化  原文：RoBERTa: A Robustly Optimized BERT Pretraining Approach 年份：2019 引用：7874 参考：RoBERTa - 论文解读，Roberta的原理介绍   :star: 它在模型层面没有改变Google的Bert，改变的只是预训练的方法。  更大的mini-batch 原本的BERT-base的batch size">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://ryan-nightwish.github.io/img/RoBERTa_cover.png">
+<meta property="article:published_time" content="2023-07-24T07:59:23.000Z">
+<meta property="article:modified_time" content="2023-07-24T08:13:09.963Z">
+<meta property="article:author" content="Ryan Wong">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ryan-nightwish.github.io/img/RoBERTa_cover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://ryan-nightwish.github.io/2023/07/24/RoBERTa%E7%9A%84%E5%8F%98%E5%8C%96/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RoBERTa的变化',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-24 16:13:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/styles.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/static-butterfly/dist/css/index.min.css"><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/RoBERTa_cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Skylark Space"><span class="site-name">Skylark Space</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">RoBERTa的变化</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-24T07:59:23.000Z" title="发表于 2023-07-24 15:59:23">2023-07-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-07-24T08:13:09.963Z" title="更新于 2023-07-24 16:13:09">2023-07-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="RoBERTa的变化"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="roberta的变化">RoBERTa的变化</h1>
+<blockquote>
+<p>原文：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1907.11692.pdf">RoBERTa: A
+Robustly Optimized BERT Pretraining Approach</a></p>
+<p>年份：2019</p>
+<p>引用：7874</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7fb5c6666fb6">RoBERTa -
+论文解读</a>，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/tfknight/p/13353642.html">Roberta的原理介绍</a></p>
+</blockquote>
+<blockquote>
+<p>:star:
+它在模型层面没有改变Google的Bert，<strong>改变的只是预训练的方法</strong>。</p>
+</blockquote>
+<h2 id="更大的mini-batch">更大的mini-batch</h2>
+<p>原本的BERT-base的batch size是256，训练了1M个steps。而RoBERTa的batch
+size是8k，训练31K个steps。</p>
+<p>为什么使用更大的batch size：</p>
+<ul>
+<li><p>有钱</p></li>
+<li><p>在机器翻译中，用更大的batch
+size配合更大学习率能提升模型优化速率和模型性能（Past work in Neural
+Machine Translation has shown that training with very large mini-batches
+can both improve optimization speed and end-task performance when the
+learning rate is increased appropriately）</p></li>
+<li><p>实验证明</p>
+<figure>
+<img src="image-20230724160702403.png" alt="image-20230724160702403">
+<figcaption aria-hidden="true">image-20230724160702403</figcaption>
+</figure></li>
+</ul>
+<h2 id="更多的数据更长时间的训练">更多的数据，更长时间的训练</h2>
+<p>借鉴XLNet（126G）用了比BERT（13G）多10倍的数据，RoBERTa（160G）也用了更多的数据。性能确实再次彪升。</p>
+<figure>
+<img src="image-20230724160740652.png" alt="image-20230724160740652">
+<figcaption aria-hidden="true">image-20230724160740652</figcaption>
+</figure>
+<h2 id="动态mask">动态Mask</h2>
+<p>在BERT中有两个训练目标，分别是MLM（masked language
+modeling）和NSP（next sentence
+prediction），其中动态Mask就是针对MLM任务的改进。</p>
+<blockquote>
+<p><strong>Masked Language Model
+(MLM)</strong>：随机的输入序列中的token示例如下：选择并替换为特殊token[MASK]。在预测被masked的tokens时，MLM的目标函数是交叉熵损失函数。</p>
+</blockquote>
+<p>BERT中的MASK策略是：随机选择15%的token，这15%将要被masked的token并不会真的全部替换为[MASK]，而是从这些token中：</p>
+<ul>
+<li>随机选择80%，替换成[MASK]</li>
+<li>随机选择10%，替换成随机token</li>
+<li>随机选择10%，不改变原token</li>
+</ul>
+<p>但是BERT的MASK是在训练之前的预处理阶段就做完的，这15%的token一旦被选择就不会再改变，也就是说从一开始随机选择了这15%的token，之后的N个epoch里都不再改变了。这就叫做静态Masking。</p>
+<p>而RoBERTa的处理方法是，一开始把预训练数据复制10份，每一份分别进行15%token的mask，所以同一句话会有10种不同的mask方式，然后每份数据都训练N/100个epoch。可以理解为在训练的N个epoch中，每个序列都是变化的，所以叫动态Masking。</p>
+<figure>
+<img src="image-20230724160856882.png" alt="image-20230724160856882">
+<figcaption aria-hidden="true">image-20230724160856882</figcaption>
+</figure>
+<h2 id="去除nsp训练任务">去除NSP训练任务</h2>
+<p>在NSP任务中，BERT模型会接收两个句子，A和B，作为输入，并输出一个二元分类结果，表示这两个句子是否是相邻的。在训练的数据中，50%的B是A的下一个句子，50%的B是随机抽取的。</p>
+<p>理论上，这个任务有助于模型学习句子之间的关系和语义。但是一些研究质疑了NSP
+loss 的必要性。为此，RoBERTa比较了四种训练方式：</p>
+<ul>
+<li>SEGMENT-PAIR+NSP：这种训练形式是BERT中的默认形式，带有NSP
+loss。每个输入都是一对段，每个段可以包含多个自然句子，然后被连接在一起，中间插入了一个特殊标记[SEP]来分隔两个段落。</li>
+<li>SENTENCE-PAIR+NSP：这种训练形式和SEGMENT-PAIR+NSP类似，但是每个输入都包含一对自然句子，可以从一个文档的连续部分采样，也可以从另一个文档中采样单独的文件。</li>
+<li>FULL-SENTENCES：每个输入都包含从一个或多个文档中连续采样的完整句子，输入可能会跨越文档边界。当我们到达一个文档的末尾时，我们开始从下一个文档中抽取句子，并在文档之间添加一个额外的分隔符标记。移除了NSP
+loss。</li>
+<li>DOC-SENTENCES：输入的结构类似于FULL-SENTENCES，只是它们不能跨越文档边界。移除了NSP
+loss。</li>
+</ul>
+<figure>
+<img src="image-20230724160952313.png" alt="image-20230724160952313">
+<figcaption aria-hidden="true">image-20230724160952313</figcaption>
+</figure>
+<blockquote>
+<p>关于NSP的缺点（Chat老师回答）：
+NSP任务要求模型预测两个输入句子是否相邻。为了完成这个任务，BERT模型在每个输入序列的开头插入了一个特殊的标记[CLS]，并将两个输入句子通过特殊的[SEP]标记隔开。BERT模型只需关注[CLS]标记对应的输出向量，而不需要关注其他token的向量。这是因为[CLS]标记的向量可以看作是整个序列的汇总表示，包含了序列中所有token的信息。
+然而，这种做法可能会导致BERT模型在处理长句子时表现不佳。因为在长句子中，[CLS]标记对应的向量只包含了部分信息，无法完全捕捉整个句子的语义。</p>
+</blockquote>
+<h2 id="特殊bpe设置">特殊BPE设置</h2>
+<p>Radford在GPT2里提出了一种更巧妙的BPE实现版本byte-level text
+encoding，该方法使用bytes作为基础的子词单元，这样便把词汇表的大小控制到了5w。同时，与传统的word-level
+BPE不同，byte-level
+BPE是在字节级别上操作的，这意味着它可以处理任意语言和字符集，而不仅仅是拉丁字母表中的字符。</p>
+<p>之前的一些实验结果表明，这两种文本编码的实验性能区别不大，可能Radford
+BPE
+Encoding在某些任务上的终端性能略微差点，但是RoBerta作者坚信通用的编码模式比性能上的轻微损失更重要，所以在实验中采用了byte-level
+text encoding。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://Ryan-Nightwish.github.io">Ryan Wong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://ryan-nightwish.github.io/2023/07/24/RoBERTa%E7%9A%84%E5%8F%98%E5%8C%96/">http://ryan-nightwish.github.io/2023/07/24/RoBERTa%E7%9A%84%E5%8F%98%E5%8C%96/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Ryan-Nightwish.github.io" target="_blank">Skylark Space</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></div><div class="post_share"><div class="social-share" data-image="/img/RoBERTa_cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/06/26/GAN%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="GAN论文阅读笔记"><img class="cover" src="/img/gan_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GAN论文阅读笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/04/25/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="对比学习论文笔记"><img class="cover" src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-25</div><div class="title">对比学习论文笔记</div></div></a></div><div><a href="/2023/04/27/Transformer%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="Transformer论文笔记"><img class="cover" src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-27</div><div class="title">Transformer论文笔记</div></div></a></div><div><a href="/2023/05/27/ResNet%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="ResNet论文阅读"><img class="cover" src="/img/resnet_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-27</div><div class="title">ResNet论文阅读</div></div></a></div><div><a href="/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="MAE论文阅读笔记"><img class="cover" src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-18</div><div class="title">MAE论文阅读笔记</div></div></a></div><div><a href="/2023/05/30/ViT%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="ViT论文阅读笔记"><img class="cover" src="/img/default_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-30</div><div class="title">ViT论文阅读笔记</div></div></a></div><div><a href="/2023/06/19/LocalMIM%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="LocalMIM论文阅读笔记"><img class="cover" src="/img/localmim_cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-19</div><div class="title">LocalMIM论文阅读笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ryan Wong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Ryan-Nightwish" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:718102754@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#roberta%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">RoBERTa的变化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%A7%E7%9A%84mini-batch"><span class="toc-number">1.1.</span> <span class="toc-text">更大的mini-batch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9B%B4%E9%95%BF%E6%97%B6%E9%97%B4%E7%9A%84%E8%AE%AD%E7%BB%83"><span class="toc-number">1.2.</span> <span class="toc-text">更多的数据，更长时间的训练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81mask"><span class="toc-number">1.3.</span> <span class="toc-text">动态Mask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%BB%E9%99%A4nsp%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.4.</span> <span class="toc-text">去除NSP训练任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8Abpe%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.5.</span> <span class="toc-text">特殊BPE设置</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/07/24/RoBERTa%E7%9A%84%E5%8F%98%E5%8C%96/" title="RoBERTa的变化"><img src="/img/RoBERTa_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RoBERTa的变化"/></a><div class="content"><a class="title" href="/2023/07/24/RoBERTa%E7%9A%84%E5%8F%98%E5%8C%96/" title="RoBERTa的变化">RoBERTa的变化</a><time datetime="2023-07-24T07:59:23.000Z" title="发表于 2023-07-24 15:59:23">2023-07-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/26/GAN%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="GAN论文阅读笔记"><img src="/img/gan_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAN论文阅读笔记"/></a><div class="content"><a class="title" href="/2023/06/26/GAN%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="GAN论文阅读笔记">GAN论文阅读笔记</a><time datetime="2023-06-26T02:15:52.000Z" title="发表于 2023-06-26 10:15:52">2023-06-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/21/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="知识蒸馏论文笔记"><img src="/img/distill_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="知识蒸馏论文笔记"/></a><div class="content"><a class="title" href="/2023/06/21/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="知识蒸馏论文笔记">知识蒸馏论文笔记</a><time datetime="2023-06-21T02:16:01.000Z" title="发表于 2023-06-21 10:16:01">2023-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/19/LocalMIM%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="LocalMIM论文阅读笔记"><img src="/img/localmim_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LocalMIM论文阅读笔记"/></a><div class="content"><a class="title" href="/2023/06/19/LocalMIM%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="LocalMIM论文阅读笔记">LocalMIM论文阅读笔记</a><time datetime="2023-06-19T02:32:16.000Z" title="发表于 2023-06-19 10:32:16">2023-06-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="MAE论文阅读笔记"><img src="/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MAE论文阅读笔记"/></a><div class="content"><a class="title" href="/2023/06/18/MAE%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="MAE论文阅读笔记">MAE论文阅读笔记</a><time datetime="2023-06-18T10:24:09.000Z" title="发表于 2023-06-18 18:24:09">2023-06-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Ryan Wong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
